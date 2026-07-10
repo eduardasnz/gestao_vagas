@@ -15,6 +15,6 @@ public class ListAllJobsByFilterService {
     private JobRepository jobRepository;
     
     public List<JobEntity> execute(String description) {
-        return this.jobRepository.findByDescriptionContaining(description);
+        return this.jobRepository.findByDescriptionContainingIgnoreCase(description);
     }
 }
