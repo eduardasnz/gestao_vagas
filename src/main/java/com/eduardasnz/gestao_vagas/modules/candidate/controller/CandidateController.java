@@ -1,5 +1,6 @@
 package com.eduardasnz.gestao_vagas.modules.candidate.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eduardasnz.gestao_vagas.modules.candidate.entity.CandidateEntity;
 import com.eduardasnz.gestao_vagas.modules.candidate.services.CandidateService;
+import com.eduardasnz.gestao_vagas.modules.candidate.services.ListAllJobsByFilterService;
 import com.eduardasnz.gestao_vagas.modules.candidate.services.ProfileCandidateService;
+import com.eduardasnz.gestao_vagas.modules.company.entities.JobEntity;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
@@ -28,15 +34,18 @@ public class CandidateController {
     @Autowired
     private ProfileCandidateService profileCandidateService;
 
+    @Autowired
+    private ListAllJobsByFilterService listAllJobsByFilterService;
+
     @PostMapping("/")
     public ResponseEntity<Object> create(@Valid @RequestBody CandidateEntity candidateEntity) {
-       try{
-        var result = this.candidateService.createCandidate(candidateEntity);
+        try {
+            var result = this.candidateService.createCandidate(candidateEntity);
 
-        return ResponseEntity.ok().body(result);
-       } catch (Exception e){
-        return ResponseEntity.badRequest().body(e.getMessage());
-       }
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/")
@@ -46,10 +55,18 @@ public class CandidateController {
 
         try {
             var profile = profileCandidateService.execute(UUID.fromString(candidateId.toString()));
-            
+
             return ResponseEntity.ok().body(profile);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/job")
+    @PreAuthorize("hasRole('candidate')")
+    @Tag(name = "Candidatos", description = "Informações sobre o candidato.")
+    @Operation(summary = "Listagem de vagas disponíveis", description = "Essa função está responsável pela listagem das vagas de acordo com o filtro aplicado.")
+    public List<JobEntity> findJobByDescription(@RequestParam String filter) {
+        return this.listAllJobsByFilterService.execute(filter);
     }
 }
