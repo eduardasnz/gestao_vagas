@@ -20,6 +20,7 @@ import com.eduardasnz.gestao_vagas.modules.candidate.services.ProfileCandidateSe
 import com.eduardasnz.gestao_vagas.modules.company.entities.JobEntity;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -66,6 +67,7 @@ public class CandidateController {
     @PreAuthorize("hasRole('candidate')")
     @Tag(name = "Candidatos", description = "Informações sobre o candidato.")
     @Operation(summary = "Listagem de vagas disponíveis", description = "Essa função está responsável pela listagem das vagas de acordo com o filtro aplicado.")
+    @SecurityRequirement(name = "jwt_auth")
     public List<JobEntity> findJobByDescription(@RequestParam String filter) {
         return this.listAllJobsByFilterService.execute(filter);
     }
