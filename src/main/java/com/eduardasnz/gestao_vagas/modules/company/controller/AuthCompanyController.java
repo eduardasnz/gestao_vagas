@@ -12,14 +12,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eduardasnz.gestao_vagas.modules.company.dtos.AuthCompanyDTO;
 import com.eduardasnz.gestao_vagas.modules.company.services.AuthCompanyService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/company")
+@Tag(name = "Empresas")
 public class AuthCompanyController {
     
     @Autowired
     private AuthCompanyService authCompanyService;
 
     @PostMapping("/auth")
+    @Operation(summary = "Autenticação da empresa", description = "Essa função está responsável por authenticar uma empresa")
     public ResponseEntity<Object> create(@RequestBody AuthCompanyDTO authCompanyDTO) {
         try {
             var result = this.authCompanyService.execute(authCompanyDTO);

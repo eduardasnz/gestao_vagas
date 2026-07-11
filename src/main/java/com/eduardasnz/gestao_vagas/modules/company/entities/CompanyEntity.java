@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,19 +25,19 @@ public class CompanyEntity {
     private UUID id;
 
     @Pattern(regexp = "^\\S+$", message = "Campo [USERNAME] não deve conter espaço.")
-    @Schema(example = "inovacode")
+    @Schema(example = "inovacode", requiredMode = RequiredMode.REQUIRED, description = "Username da Compania.")
     private String username;
 
     @Email(message = "Campo [EMAIL] deve conter email válido.")
-    @Schema(example = "contato@inovacode.com")
+    @Schema(example = "contato@inovacode.com", requiredMode = RequiredMode.REQUIRED, description = "Email da Compania.")
     private String email;
 
     @Length(min = 1, max = 80)
-    @Schema(example = "@inova2026")
+    @Schema(example = "@inova2026", requiredMode = RequiredMode.REQUIRED, description = "Senha da Compania.")
     private String password;
-    @Schema(example = "https://www.inovacode.com.br")
+    @Schema(example = "https://www.inovacode.com.br", requiredMode = RequiredMode.REQUIRED, description = "Website da Compania.")
     private String website;
-    @Schema(example = "InovaCode Technologia")
+    @Schema(example = "InovaCode Technologia", requiredMode = RequiredMode.REQUIRED, description = "Nome da Compania.")
     private String name;
 
     @CreationTimestamp
