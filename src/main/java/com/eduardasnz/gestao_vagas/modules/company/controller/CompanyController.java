@@ -10,24 +10,36 @@ import org.springframework.web.bind.annotation.RestController;
 import com.eduardasnz.gestao_vagas.modules.company.entities.CompanyEntity;
 import com.eduardasnz.gestao_vagas.modules.company.services.CompanyService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/company")
+@Tag(name = "Empresas", description = "Informações sobre a empresa")
 public class CompanyController {
-    
+
     @Autowired
     private CompanyService companyService;
 
     @PostMapping("/")
+    @Operation(summary = "Cadastro da empresa", description = "Essa função está responsável pelo cadastro da empresa.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = CompanyEntity.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Empresa já existe.")
+    })
     public ResponseEntity<Object> create(@Valid @RequestBody CompanyEntity companyEntity) {
-        try{
+        try {
             var result = this.companyService.createCompany(companyEntity);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
-            e.getStackTrace();
-            throw e;
-            // return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
