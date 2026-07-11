@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.eduardasnz.gestao_vagas.modules.company.entities.JobEntity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,6 +41,7 @@ public class ApplyJobEntity {
     private JobEntity jobEntity;
 
     @Column(name = "candidate_id")
+    @Schema(name = "Id do Candidato")
     private UUID candidateId;
     
     @Column(name = "job_id")
