@@ -78,6 +78,7 @@ git clone https://github.com/eduardasnz/gestao_vagas.git
 cd gestao_vagas
 ```
 
+<<<<<<< HEAD
 ### 2. Suba o banco de dados com Docker Compose
 
 ```bash
@@ -134,3 +135,17 @@ Este projeto é uma API backend voltada para estudo e prática de desenvolviment
 - painel administrativo;
 - sistema de notificações;
 - deploy em ambientes cloud.
+=======
+# Execute com Docker Compose
+docker-compose up --build
+```
+
+## 📖 Documentação da API (Swagger)
+
+A API possui documentação interativa gerada com **Springdoc OpenAPI (Swagger)**.
+
+Após iniciar a aplicação, acesse:
+
+- **Swagger UI:** http://localhost:8080/swagger-ui/index.html
+- **OpenAPI JSON:** http://localhost:8080/v3/api-docs
+>>>>>>> b48467e19778bcfebfce1c46a4adec9f4bcfd6f3
