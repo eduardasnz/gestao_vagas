@@ -42,3 +42,13 @@ cd gestao_vagas
 
 # Execute com Docker Compose
 docker-compose up --build
+```
+
+## 📖 Documentação da API (Swagger)
+
+A API possui documentação interativa gerada com **Springdoc OpenAPI (Swagger)**.
+
+Após iniciar a aplicação, acesse:
+
+- **Swagger UI:** http://localhost:8080/swagger-ui/index.html
+- **OpenAPI JSON:** http://localhost:8080/v3/api-docs
